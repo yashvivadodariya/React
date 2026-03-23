@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #eef2ff, #f1f5f9);
+    font-family: system-ui;
+}
+
+.container {
+    margin: 25px !important;
+}
+
+.navbar {
+    background: linear-gradient(90deg, #4f46e5, #6366f1) !important;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, .15);
+    padding: 14px 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: #fff !important;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: #e0e7ff !important;
+    margin-left: 18px;
+    font-weight: 500;
+    transition: .2s;
+}
+
+.nav-link:hover {
+    color: #fff !important;
+    transform: translateY(-1px);
+}
+
+h2 {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 25px;
+}
+
+form {
+    background: #fff;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #334155;
+}
+
+.form-control {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    transition: .2s;
+}
+
+.form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, .2);
+}
+
+.btn {
+    border-radius: 12px !important;
+    padding: 8px 18px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #6366f1, #4f46e5);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #4f46e5, #4338ca);
+}
+
+.btn-warning {
+    background: #facc15;
+    border: none;
+}
+
+.btn-danger {
+    background: #ef4444;
+    border: none;
+}
+
+.btn-secondary {
+    background: #64748b;
+    border: none;
+}
+
+.card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: .25s;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+    background: #fff;
+}
+
+.card:hover {
+    transform: translateY(-7px) scale(1.02);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .15);
+}
+
+.card-img-top {
+    height: 410px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 18px;
+}
+
+.card-title {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.card-text {
+    color: #475569;
+    font-size: 14px;
+}
+
+.card p {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.delete-box {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+    text-align: center;
+}
+
+.delete-box h4 {
+    margin-bottom: 18px;
+}
+
+@media(max-width:768px) {
+    form {
+        padding: 20px;
+    }
+
+    .card-img-top {
+        height: 180px;
+    }
+}
