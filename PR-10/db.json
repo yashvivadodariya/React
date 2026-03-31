@@ -17,6 +17,42 @@
       "image": "",
       "status": true,
       "category": "main"
+    },
+    {
+      "id": "fbEVkXaz0qc",
+      "name": "ghjk",
+      "price": "9097",
+      "description": " bnm",
+      "image": "fghj",
+      "status": true,
+      "category": "starter"
+    },
+    {
+      "id": "1BS70JHZjq0",
+      "name": "rtyui",
+      "price": "789",
+      "description": "hfdndhsjdf",
+      "image": " vjdfhuew",
+      "status": true,
+      "category": "starter"
+    },
+    {
+      "id": "1xjOhIuvg4M",
+      "name": "ertyuio",
+      "price": "456789",
+      "description": "ertyui",
+      "image": "",
+      "status": true,
+      "category": "main"
+    },
+    {
+      "id": "QKPB7W_w9cA",
+      "name": "ASDFGHJK",
+      "price": "456789",
+      "description": "ZXCVBNM",
+      "image": "",
+      "status": true,
+      "category": "starter"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

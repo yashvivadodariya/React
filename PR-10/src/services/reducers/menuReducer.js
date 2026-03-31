@@ -2,58 +2,62 @@ const initialState = {
   menus: [],
   menu: null,
   loading: false,
-  error: ""
+  error: "",
+  isCreated: false,
+  isUpdated: false,
 };
 
 export const menuReducer = (state = initialState, action) => {
-
   switch (action.type) {
 
     case "LOADING":
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
     case "ERROR":
       return {
         ...state,
         loading: false,
-        error: action.payload
+        error: action.payload,
       };
 
     case "GET_ALL_MENU":
       return {
         ...state,
+        menus: action.payload,
         loading: false,
-        menus: action.payload
-      };
-
-    case "ADD_MENU":
-      return {
-        ...state,
-        loading: false,
-        menus: [...state.menus, action.payload]
-      };
-
-    case "DELETE_MENU":
-      return {
-        ...state,
-        menus: state.menus.filter(m => m.id !== action.payload)
+        isCreated: false,
+        isUpdated: false,
       };
 
     case "GET_MENU":
       return {
         ...state,
-        menu: action.payload
+        menu: action.payload,
+        loading: false,
+      };
+
+    case "ADD_MENU":
+      return {
+        ...state,
+        isCreated: true,
+        loading: false,
       };
 
     case "UPDATE_MENU":
       return {
         ...state,
-        menus: state.menus.map(m =>
-          m.id === action.payload.id ? action.payload : m
-        )
+        menu: null,
+        isUpdated: true,
+        loading: false,
+      };
+
+    case "DELETE_MENU":
+      return {
+        ...state,
+        menus: state.menus.filter(m => m.id !== action.payload),
       };
 
     default:

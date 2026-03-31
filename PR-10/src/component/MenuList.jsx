@@ -17,86 +17,188 @@ const MenuList = ({ category }) => {
     m => m.category?.toLowerCase() === category.toLowerCase()
   );
 
-  const handleEdit = (id) => {
-    navigate(`/edit-menu/${id}`);
-  }
-
   return (
-    <div className="container mt-4">
+    <>
+      <style>{`
+        .menu-page {
+          background: var(--dark);
+          padding: 100px 60px;
+          min-height: 100vh;
+        }
 
-      <h2 className="text-center mb-4 text-capitalize">
-        {category} Menu
-      </h2>
+        .menu-title {
+          text-align: center;
+          margin-bottom: 60px;
+        }
 
-      <div className="row">
+        .menu-title h2 {
+          font-family: var(--serif);
+          font-size: 42px;
+          color: var(--cream);
+        }
+
+        .menu-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+        }
+
+        .menu-card {
+          background: var(--dark2);
+          border: 1px solid rgba(245,240,232,.08);
+          overflow: hidden;
+          transition: transform .3s, border .3s;
+        }
+
+        .menu-card:hover {
+          transform: translateY(-6px);
+          border: 1px solid var(--gold);
+        }
+
+        .menu-img {
+          width: 100%;
+          height: 220px;
+          object-fit: cover;
+        }
+
+        .menu-content {
+          padding: 25px;
+        }
+
+        .menu-name {
+          font-family: var(--serif);
+          font-size: 20px;
+          color: var(--cream);
+          margin-bottom: 10px;
+        }
+
+        .menu-desc {
+          font-size: 13px;
+          color: rgba(245,240,232,.6);
+          margin-bottom: 15px;
+        }
+
+        .menu-price {
+          color: var(--gold);
+          font-size: 14px;
+          margin-bottom: 10px;
+        }
+
+        .menu-status {
+          font-size: 11px;
+          margin-bottom: 15px;
+        }
+
+        .status-yes {
+          color: var(--gold);
+        }
+
+        .status-no {
+          color: red;
+        }
+
+        .menu-actions {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .btn-del, .btn-edit {
+          padding: 8px 14px;
+          font-size: 11px;
+          border: 1px solid var(--gold);
+          background: transparent;
+          color: var(--gold);
+          cursor: pointer;
+        }
+
+        .btn-del:hover {
+          background: red;
+          border-color: red;
+          color: #fff;
+        }
+
+        .btn-edit:hover {
+          background: var(--gold);
+          color: var(--dark);
+        }
+
+        .empty {
+          text-align: center;
+          color: var(--cream);
+        }
+      `}</style>
+
+      <div className="menu-page">
+
+        <div className="menu-title">
+          <h2>
+            {category} <em>Menu</em>
+          </h2>
+        </div>
 
         {
           filtered.length > 0 ? (
-            filtered.map((m) => (
 
-              <div className="col-md-4 mb-4" key={m.id}>
+            <div className="menu-grid">
 
-                <div className="card shadow h-100">
+              {filtered.map((m) => (
 
-                  {/* IMAGE */}
+                <div className="menu-card" key={m.id}>
+
                   <img
                     src={m.image || "https://via.placeholder.com/300"}
-                    className="card-img-top"
-                    style={{ height: "200px", objectFit: "cover" }}
+                    className="menu-img"
                   />
 
-                  <div className="card-body">
+                  <div className="menu-content">
 
-                    <h5 className="card-title">{m.name}</h5>
+                    <h3 className="menu-name">{m.name}</h3>
 
-                    <p className="card-text text-muted">
-                      {m.description}
-                    </p>
+                    <p className="menu-desc">{m.description}</p>
 
-                    <h6 className="text-success">
-                      ₹ {m.price}
-                    </h6>
+                    <div className="menu-price">₹ {m.price}</div>
 
-                    <p>
-                      Status:{" "}
-                      <span className={m.status ? "text-success" : "text-danger"}>
-                        {m.status ? "Available" : "Not Available"}
+                    <div className="menu-status">
+                      Status:
+                      <span className={m.status ? "status-yes" : "status-no"}>
+                        {m.status ? " Available" : " Not Available"}
                       </span>
-                    </p>
+                    </div>
 
-                  </div>
+                    <div className="menu-actions">
 
-                  <div className="card-footer d-flex justify-content-between">
+                      <button
+                        className="btn-del"
+                        onClick={() => dispatch(deleteMenuAsync(m.id))}
+                      >
+                        Delete
+                      </button>
 
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => dispatch(deleteMenuAsync(m.id))}
-                    >
-                      Delete
-                    </button>
+                      <button
+                        className="btn-edit"
+                        onClick={() => navigate(`/edit-menu/${m.id}`)}
+                      >
+                        Edit
+                      </button>
 
-                    <button
-                      className="btn btn-primary btn-sm"
-                      onClick={() => handleEdit(m.id)}
-                    >
-                      Edit
-                    </button>
+                    </div>
 
                   </div>
 
                 </div>
 
-              </div>
+              ))}
 
-            ))
+            </div>
+
           ) : (
-            <h5 className="text-center">No Data Found</h5>
+            <h4 className="empty">No Data Found</h4>
           )
         }
 
       </div>
-    </div>
-  )
-}
+    </>
+  );
+};
 
 export default MenuList;

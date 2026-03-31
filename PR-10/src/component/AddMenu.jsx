@@ -3,90 +3,194 @@ import { useDispatch } from "react-redux";
 import { addMenuAsync } from "../services/actions/menuAction";
 import { useNavigate } from "react-router-dom";
 
-const AddMenu = ({ category }) => {
-
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const [status, setStatus] = useState(true);
-
+const AddMenuPage = ({ category }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    description: "",
+    image: "",
+    status: true,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: name === "status" ? value === "true" : value,
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let obj = {
-      id: Date.now(),
-      name,
-      price,
-      description,
-      image,
-      status,
-      category
-    }
+    const newMenu = {
+      ...formData,
+      price: Number(formData.price),
+      category,
+    };
 
-    dispatch(addMenuAsync(obj));
-
+    dispatch(addMenuAsync(newMenu));
     navigate(`/${category}-list`);
-  }
+
+    setFormData({
+      name: "",
+      price: "",
+      description: "",
+      image: "",
+      status: true,
+    });
+  };
 
   return (
-    <div className="container mt-5">
-  <div className="card p-4 shadow">
+    <>
+      <style>{`
+        :root {
+          --gold:#C9A84C;
+          --dark:#0E0D0B;
+          --cream:#F5F0E8;
+        }
 
-    <h3 className="text-center mb-4">
-      Add {category}
-    </h3>
+        .reservation-section {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          min-height: 100vh;
+        }
 
-    <form onSubmit={handleSubmit}>
+        .reservation-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
 
-      <input
-        type="text"
-        placeholder="Enter Name"
-        className="form-control mb-3"
-        onChange={(e) => setName(e.target.value)}
-      />
+        .reservation-form {
+          background: var(--cream);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 80px;
+        }
 
-      <input
-        type="number"
-        placeholder="Enter Price"
-        className="form-control mb-3"
-        onChange={(e) => setPrice(e.target.value)}
-      />
+        .label {
+          font-size: 10px;
+          letter-spacing: .3em;
+          text-transform: uppercase;
+          color: var(--gold);
+          margin-bottom: 20px;
+        }
 
-      <input
-        type="text"
-        placeholder="Enter Description"
-        className="form-control mb-3"
-        onChange={(e) => setDescription(e.target.value)}
-      />
+        .reservation-form h2 {
+          font-size: 32px;
+          margin-bottom: 40px;
+        }
 
-      <input
-        type="text"
-        placeholder="Enter Image URL"
-        className="form-control mb-3"
-        onChange={(e) => setImage(e.target.value)}
-      />
+        .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
 
-      <select
-        className="form-control mb-3"
-        onChange={(e) => setStatus(e.target.value === "true")}
-      >
-        <option value={true}>Available</option>
-        <option value={false}>Not Available</option>
-      </select>
+        .reservation-form input,
+        .reservation-form select {
+          border: none;
+          border-bottom: 1px solid rgba(0,0,0,.2);
+          padding: 10px 0;
+          margin-bottom: 20px;
+          outline: none;
+          background: transparent;
+        }
 
-      <button className="btn btn-success w-100">
-        Add Menu
-      </button>
+        .btn-dark {
+          margin-top: 20px;
+          padding: 16px;
+          background: var(--dark);
+          color: white;
+          border: none;
+          cursor: pointer;
+          letter-spacing: 2px;
+        }
+      `}</style>
 
-    </form>
+      {/* MAIN */}
+      <div className="reservation-section">
 
-  </div>
-</div>
-  )
-}
+        {/* LEFT IMAGE */}
+        <div className="reservation-img">
+          <img
+            src={
+              formData.image ||
+              "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
+            }
+            alt="food"
+          />
+        </div>
 
-export default AddMenu;
+        {/* RIGHT FORM */}
+        <div className="reservation-form">
+
+          {/* 🔥 SAME AS EDIT HEADER */}
+          <span className="label">Add Item</span>
+
+          <h2>
+            Create <em>Your Dish</em>
+          </h2>
+
+          <form onSubmit={handleSubmit}>
+
+            <div className="form-row">
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+
+              <input
+                type="number"
+                name="price"
+                placeholder="Enter Price"
+                value={formData.price}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <input
+              type="text"
+              name="description"
+              placeholder="Enter Description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+
+            <input
+              type="text"
+              name="image"
+              placeholder="Enter Image URL"
+              value={formData.image}
+              onChange={handleChange}
+            />
+
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              <option value="true">Available</option>
+              <option value="false">Not Available</option>
+            </select>
+
+            <button className="btn-dark">Add Menu</button>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default AddMenuPage;

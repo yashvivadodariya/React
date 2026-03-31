@@ -6,47 +6,115 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <Navbar expand="lg" bg="light">
-      <Container>
+    <>
+      <style>
+        {`
+        :root {
+          --gold: #C9A84C;
+          --dark: #0E0D0B;
+          --dark2: #1A1814;
+          --cream: #F5F0E8;
+        }
 
-        <Navbar.Brand as={Link} to="/">NOMA</Navbar.Brand>
+        .noma-nav {
+          background: rgba(14,13,11,.95) !important;
+          padding: 20px 60px;
+        }
 
-        <Navbar.Toggle />
-        <Navbar.Collapse>
+        .nav-logo {
+          font-size: 26px;
+          letter-spacing: .18em;
+          color: var(--cream) !important;
+        }
 
-          <Nav className="me-auto">
+        .nav-links .nav-link {
+          font-size: 11px;
+          letter-spacing: .22em;
+          text-transform: uppercase;
+          color: rgba(245,240,232,.65) !important;
+          margin-right: 20px;
+        }
 
-            <Nav.Link as={Link} to="/">Home</Nav.Link>
+        .nav-links .nav-link:hover {
+          color: var(--gold) !important;
+        }
 
-            {/* STARTER */}
-            <NavDropdown title="Starter">
-              <NavDropdown.Item as={Link} to="/add-starter">Add Starter</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/starter-list">View Starter</NavDropdown.Item>
-            </NavDropdown>
+        .nav-cta {
+          font-size: 10px;
+          letter-spacing: .22em;
+          text-transform: uppercase;
+          color: var(--gold);
+          border: 1px solid var(--gold);
+          padding: 8px 18px;
+          margin-left: 20px;
+          text-decoration: none;
+        }
 
-            {/* MAIN COURSE */}
-            <NavDropdown title="Main Course">
-              <NavDropdown.Item as={Link} to="/add-main">Add Main</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/main-list">View Main</NavDropdown.Item>
-            </NavDropdown>
+        .nav-cta:hover {
+          background: var(--gold);
+          color: var(--dark);
+        }
 
-            {/* DRINK */}
-            <NavDropdown title="Drink">
-              <NavDropdown.Item as={Link} to="/add-drink">Add Drink</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/drink-list">View Drink</NavDropdown.Item>
-            </NavDropdown>
+        /* Dropdown */
+        .custom-dropdown .dropdown-menu {
+          background: var(--dark2);
+          border: 1px solid rgba(245,240,232,.1);
+        }
 
-            {/* DESSERT */}
-            <NavDropdown title="Dessert">
-              <NavDropdown.Item as={Link} to="/add-dessert">Add Dessert</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/dessert-list">View Dessert</NavDropdown.Item>
-            </NavDropdown>
+        .custom-dropdown .dropdown-item {
+          font-size: 11px;
+          color: rgba(245,240,232,.6);
+        }
 
-          </Nav>
+        .custom-dropdown .dropdown-item:hover {
+          background: rgba(201,168,76,.1);
+          color: var(--gold);
+        }
+      `}
+      </style>
 
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+      <Navbar expand="lg" className="noma-nav">
+
+        <Container>
+
+          <Navbar.Brand as={Link} to="/" className="nav-logo">
+            NOMA
+          </Navbar.Brand>
+
+          <Navbar.Toggle className="bg-light" />
+
+          <Navbar.Collapse>
+
+            <Nav className="ms-auto nav-links">
+
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
+
+              <NavDropdown title="Starter" className="custom-dropdown">
+                <NavDropdown.Item as={Link} to="/add-starter">Add Starter</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/starter-list">View Starter</NavDropdown.Item>
+              </NavDropdown>
+              
+              <NavDropdown title="Drink" className="custom-dropdown">
+                <NavDropdown.Item as={Link} to="/add-drink">Add Drink</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/drink-list">View Drink</NavDropdown.Item>
+              </NavDropdown>
+
+              <NavDropdown title="Dessert" className="custom-dropdown">
+                <NavDropdown.Item as={Link} to="/add-dessert">Add Dessert</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/dessert-list">View Dessert</NavDropdown.Item>
+              </NavDropdown>
+
+            </Nav>
+
+            <Link to="/" className="nav-cta">
+              BOOK TABLE
+            </Link>
+
+          </Navbar.Collapse>
+
+        </Container>
+      </Navbar>
+    </>
   );
 }
 

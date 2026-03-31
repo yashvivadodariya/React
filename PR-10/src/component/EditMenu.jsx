@@ -11,156 +11,228 @@ const EditMenu = () => {
 
   const { menu } = useSelector(state => state);
 
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    description: "",
+    image: "",
+  });
 
+  // fetch data
   useEffect(() => {
     dispatch(getMenuAsync(id));
-  }, []);
+  }, [dispatch, id]);
 
+  // set data
   useEffect(() => {
-    if(menu){
-      setName(menu.name);
-      setPrice(menu.price);
-      setDescription(menu.description);
-      setImage(menu.image);
+    if (menu) {
+      setFormData({
+        name: menu.name || "",
+        price: menu.price || "",
+        description: menu.description || "",
+        image: menu.image || "",
+      });
     }
   }, [menu]);
 
+  // handle change
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let obj = {
-      id: Number(id),
-      name,
-      price,
-      description,
-      image,
+    const obj = {
+      ...formData,
+      id: id, // ✅ Firebase string id
+      price: Number(formData.price),
       category: menu.category
-    }
+    };
 
     dispatch(updateMenuAsync(obj));
     navigate(`/${menu.category}-list`);
-  }
+  };
 
   return (
-    <div style={styles.page}>
-      <div style={styles.card}>
+    <>
+      {/* ───────── CSS (UNCHANGED) ───────── */}
+      <style>{`
+        :root {
+          --gold:#C9A84C;
+          --dark:#0E0D0B;
+          --dark2:#1A1814;
+          --cream:#F5F0E8;
+        }
 
-        <span style={styles.label}>Edit Menu</span>
+        .reservation-section {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          min-height: 100vh;
+        }
 
-        <h2 style={styles.heading}>
-          Refine Your <em>Dish</em>
-        </h2>
+        .reservation-img {
+          position: relative;
+        }
 
-        <form onSubmit={handleSubmit} style={styles.form}>
+        .reservation-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform .5s;
+        }
 
-          <div style={styles.field}>
-            <label>Name</label>
-            <input value={name} onChange={(e)=>setName(e.target.value)} />
-          </div>
+        .reservation-img:hover img {
+          transform: scale(1.05);
+        }
 
-          <div style={styles.field}>
-            <label>Price</label>
-            <input value={price} onChange={(e)=>setPrice(e.target.value)} />
-          </div>
+        .reservation-img-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(14,13,11,.4);
+        }
 
-          <div style={styles.field}>
-            <label>Description</label>
-            <input value={description} onChange={(e)=>setDescription(e.target.value)} />
-          </div>
+        .reservation-form {
+          background: var(--cream);
+          color: var(--dark);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 80px;
+        }
 
-          <div style={styles.field}>
-            <label>Image URL</label>
-            <input value={image} onChange={(e)=>setImage(e.target.value)} />
-          </div>
+        .label {
+          font-size: 10px;
+          letter-spacing: .3em;
+          text-transform: uppercase;
+          color: var(--gold);
+          margin-bottom: 20px;
+        }
 
-          <button type="submit" style={styles.button}>
-            Update Menu →
-          </button>
+        .reservation-form h2 {
+          font-size: 32px;
+          margin-bottom: 40px;
+        }
 
-        </form>
+        .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+
+        .form-field {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 20px;
+        }
+
+        .form-field label {
+          font-size: 10px;
+          letter-spacing: .2em;
+          margin-bottom: 6px;
+        }
+
+        .form-field input {
+          border: none;
+          border-bottom: 1px solid rgba(0,0,0,.2);
+          padding: 10px 0;
+          outline: none;
+          background: transparent;
+        }
+
+        .form-field input:focus {
+          border-bottom: 1px solid var(--gold);
+        }
+
+        .btn-dark {
+          margin-top: 30px;
+          padding: 16px;
+          background: var(--dark);
+          color: var(--cream);
+          border: none;
+          letter-spacing: .2em;
+          cursor: pointer;
+        }
+      `}</style>
+
+      {/* ───────── UI (SAME) ───────── */}
+      <div className="reservation-section">
+
+        {/* LEFT IMAGE */}
+        <div className="reservation-img">
+          <img
+            src={formData.image || "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"}
+            alt="preview"
+          />
+          <div className="reservation-img-overlay"></div>
+        </div>
+
+        {/* RIGHT FORM */}
+        <div className="reservation-form">
+
+          <span className="label">Edit Item</span>
+
+          <h2>
+            Refine <em>Your Dish</em>
+          </h2>
+
+          <form onSubmit={handleSubmit}>
+
+            <div className="form-row">
+              <div className="form-field">
+                <label>Name</label>
+                <input
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-field">
+                <label>Price</label>
+                <input
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div className="form-field">
+              <label>Description</label>
+              <input
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-field">
+              <label>Image URL</label>
+              <input
+                name="image"
+                value={formData.image}
+                onChange={handleChange}
+              />
+            </div>
+
+            <button className="btn-dark">
+              Update Menu
+            </button>
+
+          </form>
+
+        </div>
+
       </div>
-    </div>
-  )
-}
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    background: "var(--dark)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "40px"
-  },
-
-  card: {
-    width: "420px",
-    background: "var(--dark2)",
-    padding: "50px",
-    border: "1px solid rgba(201,168,76,0.2)",
-  },
-
-  label: {
-    fontSize: "10px",
-    letterSpacing: ".3em",
-    textTransform: "uppercase",
-    color: "var(--gold)",
-    marginBottom: "20px",
-    display: "block"
-  },
-
-  heading: {
-    fontFamily: "var(--serif)",
-    fontSize: "32px",
-    fontWeight: "300",
-    color: "var(--cream)",
-    marginBottom: "40px"
-  },
-
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "25px"
-  },
-
-  field: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px"
-  },
-
-  fieldLabel: {
-    fontSize: "10px",
-    letterSpacing: ".2em",
-    textTransform: "uppercase",
-    color: "rgba(245,240,232,0.5)"
-  },
-
-  input: {
-    background: "transparent",
-    border: "none",
-    borderBottom: "1px solid rgba(245,240,232,0.2)",
-    padding: "10px 0",
-    color: "var(--cream)",
-    fontSize: "14px",
-    outline: "none"
-  },
-
-  button: {
-    marginTop: "20px",
-    padding: "16px",
-    background: "transparent",
-    border: "1px solid var(--gold)",
-    color: "var(--gold)",
-    letterSpacing: ".2em",
-    textTransform: "uppercase",
-    cursor: "pointer",
-    transition: "0.3s"
-  }
+    </>
+  );
 };
 
 export default EditMenu;

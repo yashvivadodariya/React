@@ -1,107 +1,123 @@
-import { API } from "../api";
+import db from "../firebase";
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  setDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
-// LOADING
-export const loading = () => ({
-  type: "LOADING"
+/* ACTIONS */
+
+export const loading = () => ({ type: "LOADING" });
+export const errorMsg = (msg) => ({ type: "ERROR", payload: msg });
+
+export const getAllMenu = (data) => ({
+  type: "GET_ALL_MENU",
+  payload: data,
 });
 
-// ERROR
-export const errorMsg = (msg) => ({
-  type: "ERROR",
-  payload: msg
+export const getMenu = (data) => ({
+  type: "GET_MENU",
+  payload: data,
 });
+
+export const addMenu = () => ({ type: "ADD_MENU" });
+
+export const updateMenu = () => ({ type: "UPDATE_MENU" });
+
+export const deleteMenu = (id) => ({
+  type: "DELETE_MENU",
+  payload: id,
+});
+
+/* HELPER */
+const snapshotToArray = (snapshot) => {
+  const arr = [];
+  snapshot.forEach((docSnap) => {
+    arr.push({ ...docSnap.data(), id: docSnap.id });
+  });
+  return arr;
+};
+
+/* ================== FIREBASE ================== */
 
 // GET ALL
 export const getAllMenuAsync = () => {
   return async (dispatch) => {
     dispatch(loading());
-
     try {
-      let res = await API.get("/menus");
-
-      dispatch({
-        type: "GET_ALL_MENU",
-        payload: res.data
-      });
-
-    } catch (error) {
-      dispatch(errorMsg(error.message));
+      const snapshot = await getDocs(collection(db, "menus"));
+      dispatch(getAllMenu(snapshotToArray(snapshot)));
+    } catch (err) {
+      dispatch(errorMsg(err.message));
     }
-  }
-};
-
-// ADD
-export const addMenuAsync = (data) => {
-  return async (dispatch) => {
-    dispatch(loading());
-
-    try {
-      let res = await API.post("/menus", data);
-
-      dispatch({
-        type: "ADD_MENU",
-        payload: res.data
-      });
-
-    } catch (error) {
-      dispatch(errorMsg(error.message));
-    }
-  }
-};
-
-// DELETE
-export const deleteMenuAsync = (id) => {
-  return async (dispatch) => {
-    dispatch(loading());
-
-    try {
-      await API.delete(`/menus/${id}`);
-
-      dispatch({
-        type: "DELETE_MENU",
-        payload: id
-      });
-
-    } catch (error) {
-      dispatch(errorMsg(error.message));
-    }
-  }
+  };
 };
 
 // GET SINGLE
 export const getMenuAsync = (id) => {
   return async (dispatch) => {
     dispatch(loading());
-
     try {
-      let res = await API.get(`/menus/${id}`);
+      const snap = await getDoc(doc(db, "menus", id));
+      if (snap.exists()) {
+        dispatch(getMenu({ ...snap.data(), id: snap.id }));
+      }
+    } catch (err) {
+      dispatch(errorMsg(err.message));
+    }
+  };
+};
 
-      dispatch({
-        type: "GET_MENU",
-        payload: res.data
+// ADD
+export const addMenuAsync = (data) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      const ref = await addDoc(collection(db, "menus"), data);
+
+      await setDoc(doc(db, "menus", ref.id), {
+        ...data,
+        id: ref.id,
       });
 
-    } catch (error) {
-      dispatch(errorMsg(error.message));
+      dispatch(addMenu());
+      dispatch(getAllMenuAsync());
+    } catch (err) {
+      dispatch(errorMsg(err.message));
     }
-  }
+  };
 };
 
 // UPDATE
 export const updateMenuAsync = (data) => {
   return async (dispatch) => {
     dispatch(loading());
-
     try {
-      await API.put(`/menus/${data.id}`, data);
-
-      dispatch({
-        type: "UPDATE_MENU",
-        payload: data
-      });
-
-    } catch (error) {
-      dispatch(errorMsg(error.message));
+      await setDoc(doc(db, "menus", data.id), data);
+      dispatch(updateMenu());
+      dispatch(getAllMenuAsync());
+      return true;
+    } catch (err) {
+      dispatch(errorMsg(err.message));
+      return false;
     }
-  }
+  };
+};
+
+// DELETE
+export const deleteMenuAsync = (id) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      await deleteDoc(doc(db, "menus", id));
+      dispatch(deleteMenu(id));
+      dispatch(getAllMenuAsync());
+    } catch (err) {
+      dispatch(errorMsg(err.message));
+    }
+  };
 };
