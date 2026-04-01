@@ -90,7 +90,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── MENU PREVIEW ── */}
       <section className="menu-preview">
         <div className="menu-preview-header">
           <div>
@@ -180,7 +179,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── PHOTO GALLERY ── */}
       <div className="photo-gallery" id="gallery">
         {galleryItems.map((item, i) => (
           <div key={i} className={`gallery-item ${item.tall ? "tall" : ""}`}>
@@ -193,7 +191,6 @@ const Index = () => {
         ))}
       </div>
 
-      {/* ── STATS BAR ── */}
       <div className="stats-bar">
         {[
           { num: "12+", label: "Years of Excellence" },
@@ -208,7 +205,6 @@ const Index = () => {
         ))}
       </div>
 
-      {/* ── TESTIMONIAL ── */}
       <section className="testimonial-section">
         <div className="testimonial-inner">
           <div className="stars">★ ★ ★ ★ ★</div>
@@ -220,7 +216,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── CHEF SECTION ── */}
       <section className="chef-section">
         <div className="chef-text">
           <span className="label">The Artisan</span>
@@ -241,7 +236,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── RESERVATION ── */}
       <section className="reservation-section">
         <div className="reservation-img">
           <img
@@ -288,8 +282,7 @@ const Index = () => {
           <button className="btn-dark">Request Reservation</button>
         </div>
       </section>
-
-      {/* ── FOOTER ── */}
+      
       <footer className="noma-footer">
         <div className="footer-grid">
           <div className="footer-brand">

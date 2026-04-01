@@ -24,8 +24,6 @@ const Home = () => {
 
     return (
         <div className="restaurant-page">
-
-            {/* ── Navbar ── */}
             <nav className="restaurant-navbar">
                 <a href="/" className="brand-name">
                     Fi<span>dal</span>go
@@ -39,7 +37,6 @@ const Home = () => {
                 <a href="/book" className="nav-cta">Book a Table</a>
             </nav>
 
-            {/* ── Page Header ── */}
             <div className="page-header">
                 <span className="section-label">/ Our Offerings</span>
                 <h2>Menu <em>Collection</em></h2>
@@ -50,7 +47,6 @@ const Home = () => {
                 </div>
             </div>
 
-            {/* ── Add New Button ── */}
             <button
                 className="btn-add-menu"
                 onClick={() => navigate("/add-menu")}
@@ -59,7 +55,6 @@ const Home = () => {
                 Add New Item
             </button>
 
-            {/* ── Table / Empty State ── */}
             <div className="menu-table-container">
                 {menus.length > 0 ? (
                     <table className="menu-table">

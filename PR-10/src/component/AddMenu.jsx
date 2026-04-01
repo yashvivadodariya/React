@@ -128,10 +128,8 @@ const AddMenuPage = ({ category }) => {
           />
         </div>
 
-        {/* RIGHT FORM */}
         <div className="reservation-form">
 
-          {/* 🔥 SAME AS EDIT HEADER */}
           <span className="label">Add Item</span>
 
           <h2>

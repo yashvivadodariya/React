@@ -9,8 +9,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-/* ACTIONS */
-
 export const loading = () => ({ type: "LOADING" });
 export const errorMsg = (msg) => ({ type: "ERROR", payload: msg });
 
@@ -42,9 +40,6 @@ const snapshotToArray = (snapshot) => {
   return arr;
 };
 
-/* ================== FIREBASE ================== */
-
-// GET ALL
 export const getAllMenuAsync = () => {
   return async (dispatch) => {
     dispatch(loading());
@@ -57,7 +52,6 @@ export const getAllMenuAsync = () => {
   };
 };
 
-// GET SINGLE
 export const getMenuAsync = (id) => {
   return async (dispatch) => {
     dispatch(loading());
@@ -72,7 +66,6 @@ export const getMenuAsync = (id) => {
   };
 };
 
-// ADD
 export const addMenuAsync = (data) => {
   return async (dispatch) => {
     dispatch(loading());
@@ -92,7 +85,6 @@ export const addMenuAsync = (data) => {
   };
 };
 
-// UPDATE
 export const updateMenuAsync = (data) => {
   return async (dispatch) => {
     dispatch(loading());
@@ -108,7 +100,7 @@ export const updateMenuAsync = (data) => {
   };
 };
 
-// DELETE
+
 export const deleteMenuAsync = (id) => {
   return async (dispatch) => {
     dispatch(loading());

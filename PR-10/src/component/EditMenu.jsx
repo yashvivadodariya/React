@@ -23,7 +23,6 @@ const EditMenu = () => {
     dispatch(getMenuAsync(id));
   }, [dispatch, id]);
 
-  // set data
   useEffect(() => {
     if (menu) {
       setFormData({
@@ -35,7 +34,6 @@ const EditMenu = () => {
     }
   }, [menu]);
 
-  // handle change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -45,13 +43,12 @@ const EditMenu = () => {
     });
   };
 
-  // submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const obj = {
       ...formData,
-      id: id, // ✅ Firebase string id
+      id: id,
       price: Number(formData.price),
       category: menu.category
     };
@@ -62,7 +59,6 @@ const EditMenu = () => {
 
   return (
     <>
-      {/* ───────── CSS (UNCHANGED) ───────── */}
       <style>{`
         :root {
           --gold:#C9A84C;
@@ -161,7 +157,6 @@ const EditMenu = () => {
         }
       `}</style>
 
-      {/* ───────── UI (SAME) ───────── */}
       <div className="reservation-section">
 
         {/* LEFT IMAGE */}
@@ -173,7 +168,6 @@ const EditMenu = () => {
           <div className="reservation-img-overlay"></div>
         </div>
 
-        {/* RIGHT FORM */}
         <div className="reservation-form">
 
           <span className="label">Edit Item</span>
