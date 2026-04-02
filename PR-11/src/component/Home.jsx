@@ -24,6 +24,7 @@ const Home = () => {
 
     return (
         <div className="restaurant-page">
+
             <nav className="restaurant-navbar">
                 <a href="/" className="brand-name">
                     Fi<span>dal</span>go
@@ -121,6 +122,7 @@ const Home = () => {
                 )}
             </div>
 
+            {/* ── Footer Strip ── */}
             <footer className="restaurant-footer-strip">
                 <span className="footer-strip-brand">Fidalgo</span>
                 <span className="footer-strip-copy">© 2025 · All Rights Reserved</span>
