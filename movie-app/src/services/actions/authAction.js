@@ -35,7 +35,6 @@ export const registerAsync = (email, password) => {
   };
 };
 
-// LOGIN
 export const loginAsync = (email, password) => {
   return async (dispatch) => {
     dispatch(loading());
@@ -48,7 +47,6 @@ export const loginAsync = (email, password) => {
   };
 };
 
-// LOGOUT
 export const logoutAsync = () => {
   return async (dispatch) => {
     await signOut(auth);

@@ -1,8 +1,8 @@
 // Import the functions you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";       // ✅ ADD
-import { getFirestore } from "firebase/firestore"; // ✅ ADD
+import { getAuth } from "firebase/auth";    
+import { getFirestore } from "firebase/firestore"; 
 
 // Firebase config
 const firebaseConfig = {
@@ -15,13 +15,9 @@ const firebaseConfig = {
   measurementId: "G-SJQWKX380F"
 };
 
-// ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
-// ✅ EXPORT AUTH (NOW CORRECT)
 export const auth = getAuth(app);
 
-// ✅ EXPORT FIRESTORE (for movies)
 const db = getFirestore(app);
 export default db;

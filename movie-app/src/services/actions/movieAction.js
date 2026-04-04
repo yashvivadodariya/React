@@ -31,7 +31,6 @@ export const deleteMovie = (id) => ({
   payload: id,
 });
 
-/* HELPER */
 const snapshotToArray = (snapshot) => {
   const arr = [];
   snapshot.forEach((docSnap) => {
@@ -40,7 +39,6 @@ const snapshotToArray = (snapshot) => {
   return arr;
 };
 
-// GET ALL
 export const getAllMovieAsync = () => {
   return async (dispatch) => {
     dispatch(loading());
@@ -68,7 +66,6 @@ export const getMovieAsync = (id) => {
   };
 };
 
-// ADD
 export const addMovieAsync = (data) => {
   return async (dispatch) => {
     dispatch(loading());
@@ -104,7 +101,6 @@ export const updateMovieAsync = (data) => {
   };
 };
 
-// DELETE
 export const deleteMovieAsync = (id) => {
   return async (dispatch) => {
     dispatch(loading());
