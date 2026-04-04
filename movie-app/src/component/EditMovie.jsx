@@ -180,16 +180,6 @@ const EditMovie = () => {
           onChange={handleChange}
         />
 
-        <select
-          className="input"
-          name="status"
-          value={formData.status ? "true" : "false"}
-          onChange={handleChange}
-        >
-          <option value="true">Available</option>
-          <option value="false">Not Available</option>
-        </select>
-
         <button className="btn" type="submit">
           Update Movie
         </button>
